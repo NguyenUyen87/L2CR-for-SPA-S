@@ -1,0 +1,3 @@
+# The library and all heuristics use only the Python standard library (Python >= 3.9).
+# highspy is needed only for the exact IP model (experiments/small.py, tests/test_core.py::test_ip_matches_enumeration).
+highspy>=1.7

@@ -1,0 +1,4 @@
+full             RL vs HUN on validation: mean +0.59% (per training seed: +0.56, +0.51, +0.69)  pooled p=0.0000
+-popularity      RL vs HUN on validation: mean +0.50% (per training seed: +0.38, +0.44, +0.67)  pooled p=0.0000
+-cascade         RL vs HUN on validation: mean +0.26% (per training seed: +0.24, +0.26, +0.26)  pooled p=0.0178
+quota/load only  RL vs HUN on validation: mean +0.36% (per training seed: +0.42, +0.30, +0.35)  pooled p=0.0004
