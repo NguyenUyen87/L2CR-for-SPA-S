@@ -280,3 +280,31 @@ write("tab_weights.tex", r"""\begin{table}[t]
 \end{table}
 """)
 
+
+
+# ---------------------------------------------------------------- figure data: improvement vs n, size vs coalitions
+FIG_SCALE = ["ABM+HUN", "RL", "HUN-MS", "L2CR", "ABM+L2CR"]
+for lq in (0.6, 0.8):
+    with open(os.path.join(OUT, f"fig_scale_{lq}.dat"), "w") as fh:
+        fh.write("n " + " ".join(k.replace("+", "") for k in FIG_SCALE) + "\n")
+        for n in NS:
+            C = [r for r in E if r["n"] == n and r["lq"] == lq]
+            fh.write(f"{n} " + " ".join(f"{st.mean(100 * (r[k] - r['HUN']) / r['HUN'] for r in C):.3f}" for k in FIG_SCALE) + "\n")
+ALL = ["HUN", "HUN-16", "ABM+HUN", "CASCADE", "CEM", "RL", "ABM+RL", "RL-16", "HUN-MS", "SAC-HUN", "L2CR", "ABM+L2CR"]
+LABEL = {"HUN": "Hun", "HUN-16": "Hun-16", "ABM+HUN": "Abm+Hun", "CASCADE": "Cascade", "CEM": "Cem", "RL": "RL",
+         "ABM+RL": "Abm+RL", "RL-16": "RL-16", "HUN-MS": "Hun-MS", "SAC-HUN": "Sac-Hun", "L2CR": "L2cr", "ABM+L2CR": "Abm+L2cr"}
+GROUP = {"HUN": "base", "HUN-16": "base", "HUN-MS": "base", "ABM+HUN": "abm", "ABM+RL": "abm",
+         "CASCADE": "learn", "CEM": "learn", "RL": "learn", "RL-16": "learn",
+         "SAC-HUN": "sac", "L2CR": "sac", "ABM+L2CR": "sac"}
+# label anchors chosen so that labels do not overlap (Abm+RL coincides with Abm+Hun)
+ANCHOR = {"HUN": "east", "HUN-16": "north", "ABM+HUN": "north", "CASCADE": "east", "CEM": "west",
+          "RL": "south", "ABM+RL": "south", "RL-16": "south", "HUN-MS": "south", "SAC-HUN": "east",
+          "L2CR": "east", "ABM+L2CR": "west"}
+TEXT = dict(LABEL, **{"ABM+HUN": "Abm+Hun, Abm+RL", "ABM+RL": ""})
+with open(os.path.join(OUT, "fig_methods.dat"), "w") as fh:
+    fh.write("label,group,anchor,coal,gain\n")
+    for k in ALL:
+        coal = 100 * st.mean(r[k + "_coal"] / r["HUN_coal"] for r in E if r["HUN_coal"] > 0)
+        gain = st.mean(100 * (r[k] - r["HUN"]) / r["HUN"] for r in E)
+        fh.write(f"{{{TEXT[k]}}},{GROUP[k]},{ANCHOR[k]},{coal:.2f},{gain:.3f}\n")
+print("wrote fig_scale_*.dat, fig_methods.dat")

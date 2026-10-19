@@ -70,7 +70,7 @@ Run all commands from the repository root. Scripts append to `results/` and can 
 | Exp. 2–3: constructive and budgeted methods | `python experiments/large.py 1000 10 30`<br>`python experiments/large.py 2000 10 60`<br>`python experiments/large.py 5000 10 120`<br>`python experiments/large.py 10000 5 240` | 1–5 h per size |
 | Exp. 4: size vs. stability | `python experiments/tradeoff.py 1000 5 30`<br>`python experiments/tradeoff.py 2000 5 60` | 1 h |
 | Exp. 5: feature ablation | `python experiments/ablation.py` | 15 min |
-| All tables and figure data | `python experiments/make_tables.py [OUTPUT_DIR]` | seconds |
+| All tables and figure data (Tables 4–7, Figures 1–3) | `python experiments/make_tables.py [OUTPUT_DIR]` | seconds |
 
 `make_tables.py` reads `results/` and writes the LaTeX tables and pgfplots data (default `tables/`). With the files shipped in `results/` it reproduces the tables of the paper exactly. Retraining reproduces `weights/rl.json` and `weights/cem.json` exactly.
 
